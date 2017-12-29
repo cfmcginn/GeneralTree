@@ -298,6 +298,7 @@ void generalTrees::processTrees()
       if(doGlobalDebug) std::cout << __FILE__ << ", " << __LINE__ << std::endl;
 
       for(unsigned int i = 0; i < treeList.size(); ++i){
+	if(treeNEntries.at(i) != uniqueCurrNEntries) continue;
         generalTreeVect.at(i)->fill();
       }
     }

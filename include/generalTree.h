@@ -635,6 +635,8 @@ bool generalTree::eventPasses(const Bool_t isOr = false)
 
   if(doGlobalDebug) std::cout << __FILE__ << ", " << __LINE__ << std::endl;
 
+  if(cutSubList.size() == 0) evtPass = true;
+
   for(unsigned int cI = 0; cI < cutSubList.size(); ++cI){
     if(doGlobalDebug) std::cout << __FILE__ << ", " << __LINE__ << ", (size==" << cutSubList.at(cI).size() << ")" << std::endl;
 
