@@ -1,0 +1,17 @@
+#THIS IS AN EXAMPLE OF A CONFIG FILE
+#COMMENTS ARE MADE BY STARTING LINE W/ '#'
+
+#Global params, currently just maxNEntries (do -1 for all) and keepAllTrees (default is only keep named trees)
+GLOBAL:maxNEntries=100,keepAllTrees=false
+
+#tree-by-tree params
+#name the var you want to keep, the AND cuts (first semi-colon) and the OR cuts (second semi-colon)
+hiEvtAnalyzer/HiTree:hiBin,vz;{hiBin,<,60}&&{vz,<,10}&&{vz,>,-10};;
+akPu2PFJetAnalyzer/t:nref,jtpt,jtphi,jteta,refpt,refphi,refeta;;{refpt,>,30};
+akPu3PFJetAnalyzer/t:nref,jtpt,jtphi,jteta,refpt,refphi,refeta;;{refpt,>,30};
+akPu4PFJetAnalyzer/t:nref,jtpt,jtphi,jteta,refpt,refphi,refeta;;{refpt,>,30};
+HiGenParticleAna/hi:pt,phi,eta;;;
+pfcandAnalyzer/pfTree:pfPt,pfPhi,pfEta;;;
+
+#example of the skimmer correctly ignoring a bad input
+bullshittree:test
