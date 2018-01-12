@@ -690,6 +690,7 @@ bool generalTree::eventPasses(const Bool_t isOr = false)
       else if(branchDT[bPos].find("F") != std::string::npos){
 	Float_t tempVarVal = *branchFloats.at(branchPos.at(bPos));
 	bool tempCutBool = evalStringCut(tempVarVal, cutSign, cutSubList.at(cI).at(2));
+
 	if(!isOr && !tempCutBool){evtPass = false; break;}
 	else if(isOr && tempCutBool){evtPass = true; break;}
       }
@@ -1026,6 +1027,9 @@ void generalTree::write()
   outTree_p->Write("", TObject::kOverwrite);
 
   if(docCuts){
+    outFile_p->mkdir((dirPath + "/cutDocDir").c_str());
+    outFile_p->cd((dirPath + "/cutDocDir").c_str());
+
     std::string andStr = "ANDCUTS_" + dirPath + "_" + std::string(outTree_p->GetName());
     TNamed andName(andStr.c_str(), "");
     andName.Write("", TObject::kOverwrite);
