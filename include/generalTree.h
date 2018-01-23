@@ -726,7 +726,34 @@ bool generalTree::eventPasses(const Bool_t isOr = false)
       }
     }
     else if(branchIsVect[bPos]){
-      std::cout << "Vector event cuts not yet implemented" << std::endl;
+      bool doBreak = false;
+      
+      if(branchDT[bPos].find("I") != std::string::npos){
+	for(unsigned int pI = 0; pI < branchVectInts.at(branchPos.at(bPos))->size(); ++pI){
+	  Int_t tempVarVal = branchVectInts.at(branchPos.at(bPos))->at(pI);
+	  bool tempCutBool = evalStringCut(tempVarVal, cutSign, cutSubList.at(cI).at(2));
+	  if(!isOr && !tempCutBool){evtPass = false; doBreak = true; break;}
+	  else if(isOr && tempCutBool){evtPass = true; doBreak = true; break;}
+	}
+      }
+      else if(branchDT[bPos].find("F") != std::string::npos){
+	for(unsigned int pI = 0; pI < branchVectFloats.at(branchPos.at(bPos))->size(); ++pI){
+	  Float_t tempVarVal = branchVectFloats.at(branchPos.at(bPos))->at(pI);
+	  bool tempCutBool = evalStringCut(tempVarVal, cutSign, cutSubList.at(cI).at(2));
+	  if(!isOr && !tempCutBool){evtPass = false; doBreak = true; break;}
+	  else if(isOr && tempCutBool){evtPass = true; doBreak = true; break;}
+	}
+      }
+      else if(branchDT[bPos].find("D") != std::string::npos){
+	for(unsigned int pI = 0; pI < branchVectDoubles.at(branchPos.at(bPos))->size(); ++pI){
+	  Double_t tempVarVal = branchVectDoubles.at(branchPos.at(bPos))->at(pI);
+	  bool tempCutBool = evalStringCut(tempVarVal, cutSign, cutSubList.at(cI).at(2));
+	  if(!isOr && !tempCutBool){evtPass = false; doBreak = true; break;}
+	  else if(isOr && tempCutBool){evtPass = true; doBreak = true; break;}
+	}
+      }
+
+      if(doBreak) break;
     }
     else if(branchIsArr[bPos]){
       std::string pegStr = branchArrPeg[bPos];
