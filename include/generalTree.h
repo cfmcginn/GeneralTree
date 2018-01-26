@@ -1063,8 +1063,14 @@ void generalTree::write()
   outTree_p->Write("", TObject::kOverwrite);
 
   if(docCuts){
-    outFile_p->mkdir((dirPath + "/cutDocDir").c_str());
-    outFile_p->cd((dirPath + "/cutDocDir").c_str());
+    if(dirPath.size() == 0){
+      outFile_p->mkdir("cutDocDir");
+      outFile_p->cd("cutDocDir");
+    }
+    else{
+      outFile_p->mkdir((dirPath + "/cutDocDir").c_str());
+      outFile_p->cd((dirPath + "/cutDocDir").c_str());
+    }
 
     std::string andStr = "ANDCUTS_" + dirPath + "_" + std::string(outTree_p->GetName());
     TNamed andName(andStr.c_str(), "");
