@@ -232,8 +232,13 @@ void generalTrees::addTrees(TFile* inFile_p, TFile* inOutFile_p)
   if(doGlobalDebug) std::cout << __FILE__ << ", " << __LINE__ << std::endl;
 
   for(unsigned int tI = 0; tI < treeList.size(); ++tI){
+    if(doGlobalDebug) std::cout << __FILE__ << ", " << __LINE__ << ", " << treeList.at(tI) << std::endl;
+
     std::string dirPath = treeList.at(tI);
-    while(dirPath.substr(dirPath.size()-1,1).find("/") == std::string::npos) dirPath.replace(dirPath.size()-1,1,"");
+    while(dirPath.substr(dirPath.size()-1,1).find("/") == std::string::npos){
+      dirPath.replace(dirPath.size()-1,1,"");
+      if(dirPath.size() == 0) break;
+    }
 
     if(doGlobalDebug) std::cout << __FILE__ << ", " << __LINE__ << std::endl;
 

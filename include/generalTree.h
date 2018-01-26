@@ -173,16 +173,25 @@ generalTree::generalTree(TTree* inInTree_p, TFile* inOutFile_p, const std::strin
 
     std::vector<std::string> tempVect;
 
+    if(doGlobalDebug) std::cout << __FILE__ << ", " << __LINE__ << std::endl;
+
     while(temp.find(",") != std::string::npos){
       tempVect.push_back(temp.substr(0, temp.find(",")));
       temp.replace(0, temp.find(",")+1, "");
     }
     tempVect.push_back(temp);
 
+    if(doGlobalDebug) std::cout << __FILE__ << ", " << __LINE__ << std::endl;
+
     cutSubListOR.push_back(tempVect);
   }
 
-  if(dirPath.substr(dirPath.size()-1,1).find("/") != std::string::npos) dirPath.replace(dirPath.size()-1,1,"");
+  if(doGlobalDebug) std::cout << __FILE__ << ", " << __LINE__ << std::endl;
+
+  if(dirPath.size() != 0)
+    if(dirPath.substr(dirPath.size()-1,1).find("/") != std::string::npos) dirPath.replace(dirPath.size()-1,1,"");
+
+  if(doGlobalDebug) std::cout << __FILE__ << ", " << __LINE__ << std::endl;
 
   for(Int_t dI = 0; dI < nDataTypes; ++dI){
     numPerDataType[dataTypes[dI]] = 0;
