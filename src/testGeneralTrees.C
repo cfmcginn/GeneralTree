@@ -36,9 +36,9 @@ int testGeneralTrees(std::string inFileName, std::string inConfigFileName, std::
 
   inFile_p->cd();
 
-  std::cout << "Listing tnameds..." << std::endl;
+  if(doGlobalDebug) std::cout << "Listing tnameds..." << std::endl;
   for(unsigned int i = 0; i < tnameds.size(); ++i){
-    std::cout << " " << i << "/" << tnameds.size() << ": " << tnameds.at(i) << std::endl;
+    if(doGlobalDebug) std::cout << " " << i << "/" << tnameds.size() << ": " << tnameds.at(i) << std::endl;
     tnameds2.push_back(0);
     tnameds2.at(i) = (TNamed*)inFile_p->Get(tnameds.at(i).c_str());
     
