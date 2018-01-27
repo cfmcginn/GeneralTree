@@ -3,9 +3,11 @@
 
 #include "TFile.h"
 #include "TDatime.h"
+#include "TNamed.h"
 
 #include "include/doGlobalDebug.h"
 #include "include/generalTrees.h"
+#include "include/returnRootFileContentsList.h"
 
 int testGeneralTrees(std::string inFileName, std::string inConfigFileName, std::string inOutFileName = "")
 {
@@ -28,12 +30,59 @@ int testGeneralTrees(std::string inFileName, std::string inConfigFileName, std::
   if(doGlobalDebug) std::cout << __FILE__ << ", " << __LINE__ << std::endl;
 
   TFile* inFile_p = new TFile(inFileName.c_str(), "READ");
+  std::vector<std::string> tnameds = returnRootFileContentsList(inFile_p, "TNamed", "");
+  std::vector<TNamed*> tnameds2;
+  std::vector<std::string> tnamedDir;
+
+  inFile_p->cd();
+
+  std::cout << "Listing tnameds..." << std::endl;
+  for(unsigned int i = 0; i < tnameds.size(); ++i){
+    std::cout << " " << i << "/" << tnameds.size() << ": " << tnameds.at(i) << std::endl;
+    tnameds2.push_back(0);
+    tnameds2.at(i) = (TNamed*)inFile_p->Get(tnameds.at(i).c_str());
+    
+    if(doGlobalDebug) std::cout << __FILE__ << ", " << __LINE__ << std::endl;
+    std::string tempTNamed = tnameds.at(i);
+    while(tempTNamed.substr(tempTNamed.size()-1, 1).find("/") == std::string::npos){
+      tempTNamed.replace(tempTNamed.size()-1, 1, "");
+      if(tempTNamed.size() == 0) break;
+
+      if(doGlobalDebug) std::cout << __FILE__ << ", " << __LINE__ << ", " << tempTNamed << std::endl;
+    }
+
+    if(doGlobalDebug) std::cout << __FILE__ << ", " << __LINE__ << std::endl;
+
+    if(tempTNamed.size() != 0) tnamedDir.push_back(tempTNamed);
+  }
+
   if(doGlobalDebug) std::cout << __FILE__ << ", " << __LINE__ << std::endl;
   test.addTrees(inFile_p, outFile_p);
   if(doGlobalDebug) std::cout << __FILE__ << ", " << __LINE__ << std::endl;
   test.processTrees();
   test.writeTrees();
   test.clean();
+
+  outFile_p->cd();
+
+  for(unsigned int i = 0; i < tnamedDir.size(); ++i){
+    outFile_p->cd();
+    outFile_p->mkdir(tnamedDir.at(i).c_str());
+  }
+
+  for(unsigned int i = 0; i < tnameds.size(); ++i){
+    outFile_p->cd();
+    for(unsigned int j = 0; j < tnamedDir.size(); ++j){
+      if(tnameds.at(i).find(tnamedDir.at(j)) != std::string::npos){
+	outFile_p->cd(tnamedDir.at(j).c_str());
+	break;
+      }
+    }
+
+    tnameds2.at(i)->Write("", TObject::kOverwrite);
+  }
+
+  inFile_p->cd();
   inFile_p->Close();
   delete inFile_p;
 
