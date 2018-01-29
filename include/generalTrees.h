@@ -36,6 +36,8 @@ class generalTrees
   Int_t maxNEntries = -1;
   Bool_t keepAllTrees = true;
 
+  Bool_t globalOR = true;
+
   std::vector<TTree*> treeVect;
 
   TFile* outFile_p;
@@ -149,6 +151,8 @@ generalTrees::generalTrees(std::string inConfigFileName)
     if(cutStrOR.size() != 0) tempVect.push_back(cutStrOR);
 
     cutListOR.push_back(tempVect);
+
+    if(tempVect.size() != 0) globalOR = false;
   }
 
   file.close();
@@ -286,7 +290,7 @@ void generalTrees::processTrees()
       if(doGlobalDebug) std::cout << __FILE__ << ", " << __LINE__ << std::endl;
 
       bool evtPassesAND = true;
-      bool evtPassesOR = false;
+      bool evtPassesOR = globalOR;
       for(unsigned int i = 0; i < treeList.size(); ++i){
         if(treeNEntries.at(i) != uniqueCurrNEntries) continue;
         treeVect.at(i)->GetEntry(entry);
