@@ -146,6 +146,7 @@ generalTree::generalTree(TTree* inInTree_p, TFile* inOutFile_p, const std::strin
 
   for(unsigned int i = 0; i < cutListAND.size(); ++i){
     std::string temp = cutListAND.at(i);
+    std::cout << "TEST CUTS: " << temp << std::endl;
     if(doGlobalDebug) std::cout << __FILE__ << ", " << __LINE__ << ", (temp==\'" << temp << "\')" << std::endl;
 
     temp.replace(0,1,"");
@@ -650,6 +651,7 @@ bool generalTree::eventPasses(const Bool_t isOr = false)
   }
 
   for(unsigned int cI = 0; cI < cutSubList.size(); ++cI){
+
     if(doGlobalDebug) std::cout << __FILE__ << ", " << __LINE__ << ", (size==" << cutSubList.at(cI).size() << ")" << std::endl;
 
     std::string varToCut = cutSubList.at(cI).at(0);
