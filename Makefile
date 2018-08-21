@@ -12,7 +12,7 @@ MKDIR_BIN = mkdir -p $(PWD)/bin
 MKDIR_PDFDIR = mkdir -p $(PWD)/pdfDir
 MKDIR_OUTPUT = mkdir -p $(PWD)/output
 
-all: mkdirBin mkdirOutput mkdirPdfdir forestJetSkim testGeneralTrees
+all: mkdirBin mkdirOutput mkdirPdfdir forestJetSkim testGeneralTrees quickMinMaxCheck
 
 mkdirBin:
 	$(MKDIR_BIN)
@@ -28,6 +28,9 @@ forestJetSkim: src/forestJetSkim.C
 
 testGeneralTrees: src/testGeneralTrees.C
 	$(CXX) $(CXXFLAGS) $(ROOT) -I $(PWD) -o bin/testGeneralTrees.exe src/testGeneralTrees.C
+
+quickMinMaxCheck: src/quickMinMaxCheck.C
+	$(CXX) $(CXXFLAGS) $(ROOT) -I $(PWD) -o bin/quickMinMaxCheck.exe src/quickMinMaxCheck.C
 
 clean:
 	rm *~ || true
