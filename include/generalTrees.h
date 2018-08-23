@@ -284,8 +284,7 @@ void generalTrees::processTrees()
 
     std::cout << "Processing trees w/ entries " << currNEntries << std::endl;
 
-    Int_t divEntry = currNEntries/20;
-    if(divEntry < 10000) divEntry = 10000;
+    Int_t divEntry = TMath::Max(1, currNEntries/20);
 
     for(Int_t entry = 0; entry < currNEntries; ++entry){
       if(entry%divEntry == 0) std::cout << " Entry " << entry << "/" << currNEntries << std::endl;

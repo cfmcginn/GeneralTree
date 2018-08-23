@@ -1062,6 +1062,8 @@ void generalTree::write()
 {
   outFile_p->cd();
   if(dirPath.size() != 0) outFile_p->cd(dirPath.c_str());
+  std::cout << "  Writing \'" << outTree_p->GetName() << std::endl;
+  std::cout << "   Final nEntries=" << outTree_p->GetEntries() << std::endl;
   outTree_p->Write("", TObject::kOverwrite);
 
   if(docCuts){
