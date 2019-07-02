@@ -1,0 +1,5 @@
+#THIS IS AN EXAMPLE OF A CONFIG FILE
+#COMMENTS ARE MADE BY STARTING LINE W/ '#'
+
+#Global params, currently just maxNEntries (do -1 for all) and keepAllTrees (default is only keep named trees)
+GLOBAL:maxNEntries=400000,keepAllTrees=true
